@@ -1,6 +1,6 @@
 # SPA Moderna con HTML, CSS y JavaScript
 
-![Captura de la Aplicación](https://via.placeholder.com/800x500.png?text=SPA+Moderno+Preview) 
+![Captura de la Aplicación](proyecto.jpg) 
 *(Recomendación: Agregar captura real de tu aplicación aquí)*
 
 Una Single Page Application moderna y responsiva con diseño atractivo, creada con tecnologías web básicas sin necesidad de compiladores o paquetes.
