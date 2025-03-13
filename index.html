@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Colorida</title>
+    <style>
+        /* Estilos CSS Mejorados */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a8a5e6;
+            --accent-color: #ff7675;
+            --dark-color: #2d3436;
+            --light-color: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-color);
+            line-height: 1.6;
+            color: var(--dark-color);
+        }
+
+        nav {
+            background: linear-gradient(135deg, var(--primary-color), #a66efa);
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 2rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 500px;
+        }
+
+        input, textarea {
+            padding: 1rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 8px rgba(108, 92, 231, 0.2);
+        }
+
+        .success-message {
+            display: none;
+            color: #2ecc71;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                text-align: center;
+            }
+            
+            nav a {
+                display: block;
+                margin: 0.5rem auto;
+                width: 80%;
+            }
+            
+            .content {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav>
+        <a href="/" data-page="home">🏠 Inicio</a>
+        <a href="/about" data-page="about">📚 Acerca de</a>
+        <a href="/contact" data-page="contact">📬 Contacto</a>
+    </nav>
+
+    <!-- Contenido dinámico -->
+    <div id="app" class="content"></div>
+
+    <script>
+        // Configuración de rutas
+        const routes = {
+            '/': `
+                <div class="card">
+                    <h1>Bienvenido a nuestra SPA</h1>
+                    <p>Explora nuestra aplicación con diseño moderno y atractivo</p>
+                    <div style="margin-top: 2rem;">
+                        <button onclick="alert('¡Bienvenido! 😊')">Haz clic para saludar</button>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 2rem;">
+                    <h2>Características</h2>
+                    <ul style="list-style: none; padding-left: 1rem;">
+                        <li>🎨 Diseño colorido y moderno</li>
+                        <li>📱 Responsive design</li>
+                        <li>⚡ Transiciones suaves</li>
+                    </ul>
+                </div>
+            `,
+            '/about': `
+                <div class="card">
+                    <h1>Sobre nosotros</h1>
+                    <p>Somos un equipo apasionado por crear experiencias web excepcionales</p>
+                    <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+                        <div style="flex: 1; padding: 1.5rem; background: #f4f4f4; border-radius: 10px;">
+                            <h3>Misión</h3>
+                            <p>Desarrollar aplicaciones web innovadoras y accesibles</p>
+                        </div>
+                        <div style="flex: 1; padding: 1.5rem; background: #f4f4f4; border-radius: 10px;">
+                            <h3>Visión</h3>
+                            <p>Ser líderes en desarrollo web front-end</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            '/contact': `
+                <div class="card">
+                    <h1>Contáctanos</h1>
+                    <form onsubmit="event.preventDefault(); showSuccessMessage()">
+                        <input type="email" placeholder="📧 Tu correo electrónico" required>
+                        <textarea placeholder="✏️ Escribe tu mensaje..." rows="5" required></textarea>
+                        <button type="submit">Enviar mensaje</button>
+                        <div class="success-message">¡Mensaje enviado con éxito! 🎉</div>
+                    </form>
+                </div>
+            `,
+            '404': `
+                <div class="card" style="background: #fff0f0; border: 2px solid var(--accent-color);">
+                    <h1 style="color: var(--accent-color);">404 - Página no encontrada</h1>
+                    <p>La página que buscas no existe. Prueba con otro enlace.</p>
+                    <button onclick="window.history.back()" style="margin-top: 1rem;">Volver atrás</button>
+                </div>
+            `
+        };
+
+        // Función para mostrar mensaje de éxito
+        function showSuccessMessage() {
+            document.querySelector('.success-message').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.success-message').style.display = 'none';
+            }, 3000);
+        }
+
+        // Resto del JavaScript se mantiene igual
+        function router() {
+            const path = window.location.pathname;
+            const app = document.getElementById('app');
+            app.innerHTML = routes[path] || routes['404'];
+        }
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const path = new URL(e.target.href).pathname;
+                window.history.pushState({}, '', path);
+                router();
+            });
+        });
+
+        window.addEventListener('popstate', router);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            router();
+        });
+    </script>
+</body>
+</html>
